@@ -5,7 +5,7 @@ namespace Familia.Domain.SpeciesEntity
 {
     public class Species: IdEntity<SpeciesId>
     {
-        private readonly List<Breed> _breeds;
+        private readonly List<Breed> _breeds = [];
         //ef core
         private Species(SpeciesId id): base(id)
         {
