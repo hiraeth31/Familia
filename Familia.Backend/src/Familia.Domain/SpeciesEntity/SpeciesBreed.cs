@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using Familia.Domain.BreedEntity;
 
 namespace Familia.Domain.SpeciesEntity
 {

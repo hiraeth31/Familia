@@ -6,7 +6,7 @@ using Familia.Domain.VolunteerEntity.ValueObjects;
 
 namespace Familia.Domain.VolunteerEntity
 {
-    public class Volunteer: IdEntity<VolunteerId>
+    public sealed class Volunteer: IdEntity<VolunteerId>
     {
         private readonly List<Pet> _pets = [];
         private readonly List<SocialMedia> _socialMedias = [];

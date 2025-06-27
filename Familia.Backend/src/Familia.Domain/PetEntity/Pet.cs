@@ -9,6 +9,9 @@ namespace Familia.Domain.PetEntity
 {
     public class Pet: IdEntity<PetId>
     {
+        //ef core navigation
+        public Volunteer Volunteer { get; private set; } = null!;
+
         //ef core
         private Pet(PetId id): base(id)
         {
@@ -24,7 +27,7 @@ namespace Familia.Domain.PetEntity
             ContactPhone contactPhone,
             HelpRequisites helpRequisites,
             bool isNeutered,
-            DateOnly birthday,
+            DateTime birthday,
             bool isVaccinated,
             HelpStatus helpStatus,
             DateTime creationDate)
@@ -54,7 +57,7 @@ namespace Familia.Domain.PetEntity
         public ContactPhone PhoneNumber { get; private set; }
         public HelpRequisites HelpRequisites { get; private set; }
         public bool IsNeutered { get; private set; } = default!;
-        public DateOnly? Birthday { get; private set; } = default!;
+        public DateTime Birthday { get; private set; } = default!;
         public bool IsVaccinated { get; private set; } = default!;
         public HelpStatus HelpStatus { get; private set; }
         public DateTime CreationDate { get; private set; } = default!;
@@ -70,7 +73,7 @@ namespace Familia.Domain.PetEntity
             ContactPhone contactPhone,
             HelpRequisites helpRequisites,
             bool isNeutered,
-            DateOnly birthday,
+            DateTime birthday,
             bool isVaccinated,
             HelpStatus helpStatus,
             DateTime creationDate)

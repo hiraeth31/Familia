@@ -1,10 +1,14 @@
 ﻿using CSharpFunctionalExtensions;
 using Familia.Domain.Shared;
+using Familia.Domain.SpeciesEntity;
 
-namespace Familia.Domain.SpeciesEntity
+namespace Familia.Domain.BreedEntity
 {
     public class Breed: IdEntity<BreedId>
     {
+        //ef core navigation
+        public Species Species { get; private set; } = null!;
+
         //ef core
         private Breed(BreedId id): base(id)
         {
@@ -21,7 +25,7 @@ namespace Familia.Domain.SpeciesEntity
             if (string.IsNullOrWhiteSpace(name))
                 return Result.Failure<Breed>("Порода обязательна к заполению");
 
-            return Result.Success<Breed>(new Breed(breedId, name));
+            return Result.Success(new Breed(breedId, name));
         }
     }
 }

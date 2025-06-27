@@ -1,0 +1,6 @@
+services:
+  familia.api:
+    image: ${DOCKER_REGISTRY-}familiaapi
+    build:
+      context: .
+      dockerfile: src/Familia.API/Dockerfile
