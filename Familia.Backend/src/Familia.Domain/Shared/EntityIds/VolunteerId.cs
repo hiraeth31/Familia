@@ -1,4 +1,4 @@
-﻿namespace Familia.Domain.VolunteerEntity
+﻿namespace Familia.Domain.Shared.EntityIds
 {
     public record VolunteerId
     {

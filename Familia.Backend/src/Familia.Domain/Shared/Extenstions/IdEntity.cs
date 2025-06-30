@@ -1,4 +1,4 @@
-﻿namespace Familia.Domain.Shared
+﻿namespace Familia.Domain.Shared.Extenstions
 {
     public abstract class IdEntity<TId> where TId : notnull
     {

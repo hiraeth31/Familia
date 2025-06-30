@@ -1,5 +1,4 @@
-﻿using Familia.Domain.VolunteerEntity.ValueObjects;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Text.Json;
 

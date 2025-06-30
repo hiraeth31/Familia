@@ -1,4 +1,4 @@
-﻿namespace Familia.Domain.PetEntity
+﻿namespace Familia.Domain.Shared.EntityIds
 {
     public record PetId
     {

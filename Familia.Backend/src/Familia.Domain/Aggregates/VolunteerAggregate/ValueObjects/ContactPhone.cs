@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using System.Text.RegularExpressions;
 
-namespace Familia.Domain.PetEntity.ValueObjects
+namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
 {
     public record ContactPhone
     {

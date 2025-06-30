@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace Familia.Domain.PetEntity.ValueObjects
+namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
 {
     public record HelpStatus
     {
@@ -24,7 +24,7 @@ namespace Familia.Domain.PetEntity.ValueObjects
             if (match == null)
                 return Result.Failure<HelpStatus>("Поле статуса некорректно!");
 
-            return Result.Success<HelpStatus>(new HelpStatus(status));
+            return Result.Success(new HelpStatus(status));
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿
-using Familia.Domain.Shared;
-using Familia.Domain.VolunteerEntity;
+﻿using Familia.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Familia.Domain.Shared.Extenstions;
+using Familia.Domain.Shared.EntityIds;
+using Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot;
 
 namespace Familia.Infrastructure.Configurations
 {

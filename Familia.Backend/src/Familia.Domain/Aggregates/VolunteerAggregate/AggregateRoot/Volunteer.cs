@@ -1,10 +1,10 @@
 ﻿using CSharpFunctionalExtensions;
-using Familia.Domain.PetEntity;
-using Familia.Domain.PetEntity.ValueObjects;
-using Familia.Domain.Shared;
-using Familia.Domain.VolunteerEntity.ValueObjects;
+using Familia.Domain.Aggregates.VolunteerAggregate.PetEntity;
+using Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects;
+using Familia.Domain.Shared.EntityIds;
+using Familia.Domain.Shared.Extenstions;
 
-namespace Familia.Domain.VolunteerEntity
+namespace Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot
 {
     public sealed class Volunteer: IdEntity<VolunteerId>
     {
@@ -67,7 +67,7 @@ namespace Familia.Domain.VolunteerEntity
             var result = new Volunteer(volunteerId, fullName,email, description, yearsOfExperience,
                 contactPhone, helpRequisites);
 
-            return Result.Success<Volunteer>(result);
+            return Result.Success(result);
         }
         private int FoundHomeAnimalsNumber() => _pets.Where(p => p.HelpStatus == HelpStatus.FoundHome).Count();
         private int LookingForHomeAnimalsNumber() => _pets.Where(p => p.HelpStatus == HelpStatus.LookingForHome).Count();

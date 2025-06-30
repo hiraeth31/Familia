@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace Familia.Domain.VolunteerEntity.ValueObjects
+namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
 {
     public record SocialMedia
     {

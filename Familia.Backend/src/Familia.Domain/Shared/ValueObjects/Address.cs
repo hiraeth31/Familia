@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace Familia.Domain.PetEntity.ValueObjects
+namespace Familia.Domain.Shared.ValueObjects
 {
     public record Address
     {
@@ -30,7 +30,7 @@ namespace Familia.Domain.PetEntity.ValueObjects
             if (string.IsNullOrWhiteSpace(house))
                 return Result.Failure<Address>("Номер дома обязателен к заполнению!");
 
-            return Result.Success<Address>(new Address(country, city, street, house));
+            return Result.Success(new Address(country, city, street, house));
         }
     }
 }

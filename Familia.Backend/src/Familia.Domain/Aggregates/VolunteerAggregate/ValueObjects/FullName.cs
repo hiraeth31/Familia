@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace Familia.Domain.VolunteerEntity.ValueObjects
+namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
 {
     public record FullName
     {
@@ -25,7 +25,7 @@ namespace Familia.Domain.VolunteerEntity.ValueObjects
             if (string.IsNullOrWhiteSpace(patronymic))
                 return Result.Failure<FullName>("Отчество обязательно к заполнению!");
 
-            return Result.Success<FullName>(new FullName(firstName, lastName, patronymic));
+            return Result.Success(new FullName(firstName, lastName, patronymic));
         }
     }
 }

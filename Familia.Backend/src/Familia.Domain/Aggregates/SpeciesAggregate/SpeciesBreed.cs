@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
-using Familia.Domain.BreedEntity;
+using Familia.Domain.Shared.EntityIds;
 
-namespace Familia.Domain.SpeciesEntity
+namespace Familia.Domain.Aggregates.SpeciesAggregate
 {
     public record SpeciesBreed
     {
@@ -15,7 +15,7 @@ namespace Familia.Domain.SpeciesEntity
 
         public static Result<SpeciesBreed> Create(BreedId breedId, SpeciesId speciesId)
         {
-            return Result.Success<SpeciesBreed>(new SpeciesBreed(breedId, speciesId));
+            return Result.Success(new SpeciesBreed(breedId, speciesId));
         }
     }
 }

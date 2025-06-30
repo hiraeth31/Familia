@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace Familia.Domain.PetEntity.ValueObjects
+namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
 {
     public record HelpRequisites
     {
@@ -20,7 +20,7 @@ namespace Familia.Domain.PetEntity.ValueObjects
             if (string.IsNullOrWhiteSpace(details))
                 return Result.Failure<HelpRequisites>("Описание к методу оплаты обязателено к заполнению!");
 
-            return Result.Success<HelpRequisites>(new HelpRequisites(paymentMethod, details));
+            return Result.Success(new HelpRequisites(paymentMethod, details));
         }
     }
 }

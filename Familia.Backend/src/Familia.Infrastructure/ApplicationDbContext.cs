@@ -1,9 +1,8 @@
-﻿using Familia.Domain.PetEntity;
-using Familia.Domain.VolunteerEntity;
+﻿using Familia.Domain.Aggregates.SpeciesAggregate.AggregateRoot;
+using Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Familia.Infrastructure
 {
@@ -11,6 +10,7 @@ namespace Familia.Infrastructure
     {
         private const string DATABASE = "Database";
         public DbSet<Volunteer> Volunteers => Set<Volunteer>();
+        public DbSet<Species> Species => Set<Species>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace Familia.Domain.PetEntity.ValueObjects
+namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
 {
     public record BodyMeasurements
     {
@@ -20,7 +20,7 @@ namespace Familia.Domain.PetEntity.ValueObjects
             if (height <= 0 && height > 200)
                 return Result.Failure<BodyMeasurements>("Недопустимое значение роста!");
 
-            return Result.Success<BodyMeasurements>(new BodyMeasurements(weight, height));
+            return Result.Success(new BodyMeasurements(weight, height));
         }
     }
 }

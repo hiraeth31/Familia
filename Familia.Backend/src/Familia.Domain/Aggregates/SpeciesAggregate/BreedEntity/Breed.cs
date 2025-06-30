@@ -1,8 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
-using Familia.Domain.Shared;
-using Familia.Domain.SpeciesEntity;
+using Familia.Domain.Aggregates.SpeciesAggregate.AggregateRoot;
+using Familia.Domain.Shared.EntityIds;
+using Familia.Domain.Shared.Extenstions;
 
-namespace Familia.Domain.BreedEntity
+namespace Familia.Domain.Aggregates.SpeciesAggregate.BreedEntity
 {
     public class Breed: IdEntity<BreedId>
     {

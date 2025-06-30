@@ -1,11 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
-using Familia.Domain.PetEntity.ValueObjects;
-using Familia.Domain.Shared;
-using Familia.Domain.SpeciesEntity;
-using Familia.Domain.VolunteerEntity;
-using Familia.Domain.VolunteerEntity.ValueObjects;
+using Familia.Domain.Aggregates.SpeciesAggregate;
+using Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot;
+using Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects;
+using Familia.Domain.Shared.EntityIds;
+using Familia.Domain.Shared.Extenstions;
+using Familia.Domain.Shared.ValueObjects;
 
-namespace Familia.Domain.PetEntity
+namespace Familia.Domain.Aggregates.VolunteerAggregate.PetEntity
 {
     public class Pet: IdEntity<PetId>
     {

@@ -1,8 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
-using Familia.Domain.BreedEntity;
-using Familia.Domain.Shared;
+using Familia.Domain.Aggregates.SpeciesAggregate.BreedEntity;
+using Familia.Domain.Shared.EntityIds;
+using Familia.Domain.Shared.Extenstions;
 
-namespace Familia.Domain.SpeciesEntity
+namespace Familia.Domain.Aggregates.SpeciesAggregate.AggregateRoot
 {
     public class Species: IdEntity<SpeciesId>
     {
@@ -23,7 +24,7 @@ namespace Familia.Domain.SpeciesEntity
             if (string.IsNullOrWhiteSpace(name))
                 return Result.Failure<Species>("Вид обязателен к заполнению!");
 
-            return Result.Success<Species>(new Species(speciesId, name));
+            return Result.Success(new Species(speciesId, name));
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿
-using Familia.Domain.BreedEntity;
+﻿using Familia.Domain.Aggregates.SpeciesAggregate.BreedEntity;
 using Familia.Domain.Shared;
+using Familia.Domain.Shared.EntityIds;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
