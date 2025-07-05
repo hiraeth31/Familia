@@ -1,4 +1,4 @@
 ﻿namespace Familia.Application.DTOs
 {
-    public record SocialMediaDTO(string Name, string Link);
+    public record SocialMediaDto(string Name, string Link);
 }

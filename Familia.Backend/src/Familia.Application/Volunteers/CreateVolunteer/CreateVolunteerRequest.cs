@@ -3,11 +3,11 @@
 namespace Familia.Application.Volunteers.CreateVolunteer
 {
     public record CreateVolunteerRequest(
-        FullNameDTO FullName,
+        FullNameDto FullName,
         string Description,
         int YearsOfExperience,
         string Email,
         string Number,
-        List<SocialMediaDTO> SocialMedias,
-        HelpRequisitiesDTO HelpRequisities);
+        List<SocialMediaDto> SocialMedias,
+        HelpRequisitiesDto HelpRequisities);
 }

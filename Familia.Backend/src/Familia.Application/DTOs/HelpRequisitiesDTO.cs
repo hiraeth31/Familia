@@ -1,4 +1,4 @@
 ﻿namespace Familia.Application.DTOs
 {
-    public record HelpRequisitiesDTO(string PaymentMethod, string Details);
+    public record HelpRequisitiesDto(string PaymentMethod, string Details);
 }

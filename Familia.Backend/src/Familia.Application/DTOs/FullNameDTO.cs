@@ -1,6 +1,6 @@
 ﻿namespace Familia.Application.DTOs
 {
-    public record FullNameDTO(
+    public record FullNameDto(
         string FirstName,
         string LastName,
         string Patronymic);
