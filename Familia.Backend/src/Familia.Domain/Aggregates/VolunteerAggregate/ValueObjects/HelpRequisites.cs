@@ -1,9 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
+using Familia.Domain.Shared;
 
 namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
 {
     public record HelpRequisites
     {
+        private const int MAX_PAYMENT_LENGTH = 30;
+        private const int MAX_DETAILS_LENGTH = 1000;
+
         private HelpRequisites(string paymentMethod, string details)
         {
             PaymentMethod = paymentMethod;
@@ -12,15 +16,15 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
         public string PaymentMethod { get; }
         public string Details { get; }
 
-        public static Result<HelpRequisites> Create(string paymentMethod, string details)
+        public static Result<HelpRequisites, Error> Create(string paymentMethod, string details)
         {
-            if (string.IsNullOrWhiteSpace(paymentMethod))
-                return Result.Failure<HelpRequisites>("Метод оплаты обязателен к заполнению!");
+            if (string.IsNullOrWhiteSpace(paymentMethod) || paymentMethod.Length > MAX_PAYMENT_LENGTH)
+                Errors.General.ValueIsInvalid("Метод оплаты");
 
-            if (string.IsNullOrWhiteSpace(details))
-                return Result.Failure<HelpRequisites>("Описание к методу оплаты обязателено к заполнению!");
+            if (string.IsNullOrWhiteSpace(details) || paymentMethod.Length > MAX_DETAILS_LENGTH)
+                Errors.General.ValueIsInvalid("Детали");
 
-            return Result.Success(new HelpRequisites(paymentMethod, details));
+            return new HelpRequisites(paymentMethod, details);
         }
     }
 }

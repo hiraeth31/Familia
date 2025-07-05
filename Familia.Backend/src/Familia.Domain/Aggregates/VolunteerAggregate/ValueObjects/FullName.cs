@@ -1,9 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
+using Familia.Domain.Shared;
 
 namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
 {
     public record FullName
     {
+        private const int MAX_LENGTH = 25;
         private FullName(string firstName, string lastName, string patronymic)
         {
             FirstName = firstName;
@@ -14,18 +16,18 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
         public string LastName { get; }
         public string Patronymic { get; }
 
-        public static Result<FullName> Create(string firstName, string lastName, string patronymic)
+        public static Result<FullName, Error> Create(string firstName, string lastName, string patronymic)
         {
-            if (string.IsNullOrWhiteSpace(firstName))
-                return Result.Failure<FullName>("Имя обязательно к заполнению!");
+            if (string.IsNullOrWhiteSpace(firstName) || firstName.Length > MAX_LENGTH)
+                return Errors.General.ValueIsInvalid("Имя");
 
-            if (string.IsNullOrWhiteSpace(lastName))
-                return Result.Failure<FullName>("Фамилия обязательно к заполнению!");
+            if (string.IsNullOrWhiteSpace(lastName) || firstName.Length > MAX_LENGTH)
+                return Errors.General.ValueIsInvalid("Фамилия");
 
-            if (string.IsNullOrWhiteSpace(patronymic))
-                return Result.Failure<FullName>("Отчество обязательно к заполнению!");
+            if (string.IsNullOrWhiteSpace(patronymic) || firstName.Length > MAX_LENGTH)
+                return Errors.General.ValueIsInvalid("Отчество");
 
-            return Result.Success(new FullName(firstName, lastName, patronymic));
+            return new FullName(firstName, lastName, patronymic);
         }
     }
 }

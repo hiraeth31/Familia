@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using Familia.Domain.Shared;
 
 namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
 {
@@ -14,17 +15,17 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
         }
         public string Status { get; }
 
-        public static Result<HelpStatus> Create(string status)
+        public static Result<HelpStatus, Error> Create(string status)
         {
             if (string.IsNullOrWhiteSpace(status))
-                return Result.Failure<HelpStatus>("Статус помощи обязателен к заполнению!");
+                return Errors.General.ValueIsInvalid("Статус");
 
             var match = _all.FirstOrDefault(h => string.Equals(h.Status, status.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
             if (match == null)
-                return Result.Failure<HelpStatus>("Поле статуса некорректно!");
+                return Errors.General.ValueIsInvalid("Статус");
 
-            return Result.Success(new HelpStatus(status));
+            return new HelpStatus(status);
         }
     }
 }

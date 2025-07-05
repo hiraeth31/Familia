@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
-using Familia.Domain.Aggregates.VolunteerAggregate.PetEntity;
+using Familia.Domain.Aggregates.VolunteerAggregate.Entities;
 using Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects;
+using Familia.Domain.Shared;
 using Familia.Domain.Shared.EntityIds;
 using Familia.Domain.Shared.Extenstions;
 
@@ -20,58 +21,52 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot
             string description,
             int yearsOfExperience,
             ContactPhone contactPhone,
-            HelpRequisites helpRequisites)
+            HelpRequisites helpRequisites,
+            List<SocialMedia> socialMedias)
             : base(volunteerId)
         {
+            FullName = fullName;
             Email = email;
             Description = description;
             YearsOfExperience = yearsOfExperience;
             ContactPhone = contactPhone;
             HelpRequisites = helpRequisites;
+            _socialMedias = socialMedias;
         }
-        public FullName FullName { get; private set; }
+        public FullName FullName { get; private set; } = default!;
         public string Email { get; private set; } = default!;
         public string Description { get; private set; } = default!;
         public int YearsOfExperience { get; private set; } = default!;
         public int NumberOfAnimalsFoundHome => FoundHomeAnimalsNumber();
         public int NumberOfAnimalsLookingHome => LookingForHomeAnimalsNumber();
         public int NumberOfAnimalsNeedsHelp => NeedHelpAnimalsNumber();
-        public ContactPhone ContactPhone { get; private set; }
-        public HelpRequisites HelpRequisites { get; private set; }
+        public ContactPhone ContactPhone { get; private set; } = default!;
+        public HelpRequisites HelpRequisites { get; private set; } = default!;
         public IReadOnlyList<SocialMedia> SocialMedias => _socialMedias;
         public IReadOnlyList<Pet> Pets => _pets;
 
-        public static Result<Volunteer> Create(VolunteerId volunteerId,
+        public static Result<Volunteer, Error> Create(VolunteerId volunteerId,
             FullName fullName,
             string email,
             string description,
             int yearsOfExperience,
             ContactPhone contactPhone,
-            HelpRequisites helpRequisites)
+            HelpRequisites helpRequisites,
+            List<SocialMedia> socialMedias)
         {
             if (string.IsNullOrWhiteSpace(email))
-                return Result.Failure<Volunteer>("Электронный адрес обязателен к заполнению!");
-
-            if (fullName is null)
-                return Result.Failure<Volunteer>("ФИО обязателено к заполнению!");
+                return Errors.General.ValueIsInvalid("Электронный адрес");
 
             if (string.IsNullOrWhiteSpace(description))
-                return Result.Failure<Volunteer>("Описание обязателено к заполнению!");
+                return Errors.General.ValueIsInvalid("Описание");
 
-            if (contactPhone is null)
-                return Result.Failure<Volunteer>("Телефон обязателен к заполнению!");
+            var result = new Volunteer(volunteerId, fullName, email, description, yearsOfExperience,
+                contactPhone, helpRequisites, socialMedias);
 
-            if (helpRequisites is null)
-                return Result.Failure<Volunteer>("Реквизиты обязателены к заполнению!");
-
-            var result = new Volunteer(volunteerId, fullName,email, description, yearsOfExperience,
-                contactPhone, helpRequisites);
-
-            return Result.Success(result);
+            return result;
         }
-        private int FoundHomeAnimalsNumber() => _pets.Where(p => p.HelpStatus == HelpStatus.FoundHome).Count();
-        private int LookingForHomeAnimalsNumber() => _pets.Where(p => p.HelpStatus == HelpStatus.LookingForHome).Count();
-        private int NeedHelpAnimalsNumber() => _pets.Where(p => p.HelpStatus == HelpStatus.NeedsHelp).Count();
-
+        private int FoundHomeAnimalsNumber() => _pets.Count(p => p.HelpStatus == HelpStatus.FoundHome);
+        private int LookingForHomeAnimalsNumber() => _pets.Count(p => p.HelpStatus == HelpStatus.LookingForHome);
+        private int NeedHelpAnimalsNumber() => _pets.Count(p => p.HelpStatus == HelpStatus.NeedsHelp);
     }
 }

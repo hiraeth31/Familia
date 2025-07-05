@@ -1,9 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
+using Familia.Domain.Shared;
+using System.Text.Json.Serialization;
 
 namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
 {
     public record SocialMedia
     {
+        [JsonConstructor]
         private SocialMedia(string name, string link)
         {
             Name = name;
@@ -12,15 +15,15 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
         public string Name { get; }
         public string Link { get; }
 
-        public static Result<SocialMedia> Create(string name, string link)
+        public static Result<SocialMedia, Error> Create(string name, string link)
         {
             if (string.IsNullOrWhiteSpace(name))
-                return Result.Failure<SocialMedia>("Название обязательно к заполнению!");
+                return Errors.General.ValueIsInvalid("Название");
 
             if (string.IsNullOrWhiteSpace(link))
-                return Result.Failure<SocialMedia>("Ссылка обязательна к заполнению!");
+                return Errors.General.ValueIsInvalid("Ссылка");
 
-            return Result.Success(new SocialMedia(name, link));
+            return new SocialMedia(name, link);
         }
     }
 }

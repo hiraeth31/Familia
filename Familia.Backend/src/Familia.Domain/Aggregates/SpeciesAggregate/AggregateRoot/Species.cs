@@ -1,11 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
-using Familia.Domain.Aggregates.SpeciesAggregate.BreedEntity;
+using Familia.Domain.Aggregates.SpeciesAggregate.Entities;
 using Familia.Domain.Shared.EntityIds;
 using Familia.Domain.Shared.Extenstions;
 
 namespace Familia.Domain.Aggregates.SpeciesAggregate.AggregateRoot
 {
-    public class Species: IdEntity<SpeciesId>
+    public sealed class Species: IdEntity<SpeciesId>
     {
         private readonly List<Breed> _breeds = [];
         //ef core

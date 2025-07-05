@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Familia.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250630074813_Initial")]
+    [Migration("20250705040839_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -43,7 +43,7 @@ namespace Familia.Infrastructure.Migrations
                     b.ToTable("species", (string)null);
                 });
 
-            modelBuilder.Entity("Familia.Domain.Aggregates.SpeciesAggregate.BreedEntity.Breed", b =>
+            modelBuilder.Entity("Familia.Domain.Aggregates.SpeciesAggregate.Entities.Breed", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
@@ -149,14 +149,15 @@ namespace Familia.Infrastructure.Migrations
                     b.ToTable("volunteers", (string)null);
                 });
 
-            modelBuilder.Entity("Familia.Domain.Aggregates.VolunteerAggregate.PetEntity.Pet", b =>
+            modelBuilder.Entity("Familia.Domain.Aggregates.VolunteerAggregate.Entities.Pet", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("Birthday")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("birthday");
 
                     b.Property<string>("Color")
                         .IsRequired()
@@ -165,7 +166,8 @@ namespace Familia.Infrastructure.Migrations
                         .HasColumnName("color");
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creation_date");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -196,7 +198,7 @@ namespace Familia.Infrastructure.Migrations
                     b.Property<Guid?>("volunteer_id")
                         .HasColumnType("uuid");
 
-                    b.ComplexProperty<Dictionary<string, object>>("Address", "Familia.Domain.Aggregates.VolunteerAggregate.PetEntity.Pet.Address#Address", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Address", "Familia.Domain.Aggregates.VolunteerAggregate.Entities.Pet.Address#Address", b1 =>
                         {
                             b1.IsRequired();
 
@@ -225,7 +227,7 @@ namespace Familia.Infrastructure.Migrations
                                 .HasColumnName("street");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("BodyMeasurements", "Familia.Domain.Aggregates.VolunteerAggregate.PetEntity.Pet.BodyMeasurements#BodyMeasurements", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("BodyMeasurements", "Familia.Domain.Aggregates.VolunteerAggregate.Entities.Pet.BodyMeasurements#BodyMeasurements", b1 =>
                         {
                             b1.IsRequired();
 
@@ -238,7 +240,7 @@ namespace Familia.Infrastructure.Migrations
                                 .HasColumnName("weight");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("HelpRequisites", "Familia.Domain.Aggregates.VolunteerAggregate.PetEntity.Pet.HelpRequisites#HelpRequisites", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("HelpRequisites", "Familia.Domain.Aggregates.VolunteerAggregate.Entities.Pet.HelpRequisites#HelpRequisites", b1 =>
                         {
                             b1.IsRequired();
 
@@ -257,7 +259,7 @@ namespace Familia.Infrastructure.Migrations
                                 .HasColumnName("payment_method");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("HelpStatus", "Familia.Domain.Aggregates.VolunteerAggregate.PetEntity.Pet.HelpStatus#HelpStatus", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("HelpStatus", "Familia.Domain.Aggregates.VolunteerAggregate.Entities.Pet.HelpStatus#HelpStatus", b1 =>
                         {
                             b1.IsRequired();
 
@@ -267,7 +269,7 @@ namespace Familia.Infrastructure.Migrations
                                 .HasColumnName("help_status");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("PhoneNumber", "Familia.Domain.Aggregates.VolunteerAggregate.PetEntity.Pet.PhoneNumber#ContactPhone", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("PhoneNumber", "Familia.Domain.Aggregates.VolunteerAggregate.Entities.Pet.PhoneNumber#ContactPhone", b1 =>
                         {
                             b1.IsRequired();
 
@@ -285,7 +287,7 @@ namespace Familia.Infrastructure.Migrations
                     b.ToTable("pets", (string)null);
                 });
 
-            modelBuilder.Entity("Familia.Domain.Aggregates.SpeciesAggregate.BreedEntity.Breed", b =>
+            modelBuilder.Entity("Familia.Domain.Aggregates.SpeciesAggregate.Entities.Breed", b =>
                 {
                     b.HasOne("Familia.Domain.Aggregates.SpeciesAggregate.AggregateRoot.Species", "Species")
                         .WithMany("Breeds")
@@ -295,7 +297,7 @@ namespace Familia.Infrastructure.Migrations
                     b.Navigation("Species");
                 });
 
-            modelBuilder.Entity("Familia.Domain.Aggregates.VolunteerAggregate.PetEntity.Pet", b =>
+            modelBuilder.Entity("Familia.Domain.Aggregates.VolunteerAggregate.Entities.Pet", b =>
                 {
                     b.HasOne("Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot.Volunteer", "Volunteer")
                         .WithMany("Pets")
