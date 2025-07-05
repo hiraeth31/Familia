@@ -3,9 +3,9 @@ using Familia.Domain.Aggregates.SpeciesAggregate.AggregateRoot;
 using Familia.Domain.Shared.EntityIds;
 using Familia.Domain.Shared.Extenstions;
 
-namespace Familia.Domain.Aggregates.SpeciesAggregate.BreedEntity
+namespace Familia.Domain.Aggregates.SpeciesAggregate.Entities
 {
-    public class Breed: IdEntity<BreedId>
+    public sealed class Breed: IdEntity<BreedId>
     {
         //ef core navigation
         public Species Species { get; private set; } = null!;

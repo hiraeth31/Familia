@@ -1,4 +1,4 @@
-﻿using Familia.Domain.Aggregates.SpeciesAggregate.BreedEntity;
+﻿using Familia.Domain.Aggregates.SpeciesAggregate.Entities;
 using Familia.Domain.Shared;
 using Familia.Domain.Shared.EntityIds;
 using Microsoft.EntityFrameworkCore;

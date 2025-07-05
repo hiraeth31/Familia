@@ -1,4 +1,4 @@
-﻿using Familia.Domain.Aggregates.VolunteerAggregate.PetEntity;
+﻿using Familia.Domain.Aggregates.VolunteerAggregate.Entities;
 using Familia.Domain.Shared;
 using Familia.Domain.Shared.EntityIds;
 using Familia.Domain.Shared.Extenstions;
@@ -117,6 +117,7 @@ namespace Familia.Infrastructure.Configurations
 
             builder.Property(p => p.Birthday)
                 .SetDefaultDateTimeKind(DateTimeKind.Utc)
+                .HasColumnName("birthday")
                 .IsRequired();
 
             builder.Property(p => p.IsVaccinated)
@@ -132,6 +133,7 @@ namespace Familia.Infrastructure.Configurations
 
             builder.Property(p => p.CreationDate)
                 .SetDefaultDateTimeKind(DateTimeKind.Utc)
+                .HasColumnName("creation_date")
                 .IsRequired();
                 
         }

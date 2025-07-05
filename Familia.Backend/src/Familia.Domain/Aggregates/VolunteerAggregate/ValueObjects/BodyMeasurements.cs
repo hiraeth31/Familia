@@ -1,9 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
+using Familia.Domain.Shared;
 
 namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
 {
     public record BodyMeasurements
     {
+        private const int MAX_WEIGHT = 125;
+        private const int MAX_HEIGHT = 200;
         private BodyMeasurements(double weight, double height)
         {
             Weight = weight;
@@ -12,15 +15,15 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
         public double Weight { get; }
         public double Height { get; }
 
-        public static Result<BodyMeasurements> Create(double weight, double height)
+        public static Result<BodyMeasurements, Error> Create(double weight, double height)
         {
-            if (weight <= 0 && weight > 120)
-                return Result.Failure<BodyMeasurements>("Недопустимое значение веса!");
+            if (weight <= 0 && weight > MAX_WEIGHT)
+                return Errors.General.ValueIsInvalid("Вес");
 
-            if (height <= 0 && height > 200)
-                return Result.Failure<BodyMeasurements>("Недопустимое значение роста!");
+            if (height <= 0 && height > MAX_HEIGHT)
+                return Errors.General.ValueIsInvalid("Рост");
 
-            return Result.Success(new BodyMeasurements(weight, height));
+            return new BodyMeasurements(weight, height);
         }
     }
 }

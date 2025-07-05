@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using Familia.Domain.Shared;
 using System.Text.RegularExpressions;
 
 namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
@@ -14,15 +15,14 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
         }
         public string Phone { get; }
 
-        public static Result<ContactPhone> Create(string phone)
+        public static Result<ContactPhone, Error> Create(string input)
         {
-            if (string.IsNullOrWhiteSpace(phone))
-                return Result.Failure<ContactPhone>("Номер телефона обязателен к заполнению!");
+            var number = input.Trim();
 
-            if (!PhoneRegex.IsMatch(phone))
-                return Result.Failure<ContactPhone>("Неверный формат номера телефона!");
+            if (!PhoneRegex.IsMatch(number))
+                return Errors.General.ValueIsInvalid("Номер телефона");
 
-            return Result.Success(new ContactPhone(phone));
+            return new ContactPhone(number);
         }
     }
 }
