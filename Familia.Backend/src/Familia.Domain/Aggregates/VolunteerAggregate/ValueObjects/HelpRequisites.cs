@@ -19,10 +19,10 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects
         public static Result<HelpRequisites, Error> Create(string paymentMethod, string details)
         {
             if (string.IsNullOrWhiteSpace(paymentMethod) || paymentMethod.Length > MAX_PAYMENT_LENGTH)
-                Errors.General.ValueIsInvalid("Метод оплаты");
+                return Errors.General.ValueIsInvalid("Метод оплаты");
 
             if (string.IsNullOrWhiteSpace(details) || paymentMethod.Length > MAX_DETAILS_LENGTH)
-                Errors.General.ValueIsInvalid("Детали");
+                return Errors.General.ValueIsInvalid("Детали");
 
             return new HelpRequisites(paymentMethod, details);
         }

@@ -8,6 +8,6 @@ namespace Familia.Application.Volunteers.CreateVolunteer
         int YearsOfExperience,
         string Email,
         string Number,
-        List<SocialMediaDto> SocialMedias,
+        IEnumerable<SocialMediaDto> SocialMedias,
         HelpRequisitiesDto HelpRequisities);
 }
