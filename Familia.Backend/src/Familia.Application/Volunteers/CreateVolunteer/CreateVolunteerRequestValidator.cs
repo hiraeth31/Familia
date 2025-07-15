@@ -1,5 +1,6 @@
 ﻿using Familia.Application.Validation;
 using Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects;
+using Familia.Domain.Shared;
 using FluentValidation;
 
 namespace Familia.Application.Volunteers.CreateVolunteer
@@ -14,6 +15,9 @@ namespace Familia.Application.Volunteers.CreateVolunteer
 
             RuleFor(c => c.Number)
                 .MustBeValueObject(ContactPhone.Create);
+
+            RuleFor(c => c.YearsOfExperience).GreaterThanOrEqualTo(0)
+                .WithError(Errors.General.ValueIsInvalid("Years of experience"));
 
             RuleForEach(c => c.SocialMedias).
                 MustBeValueObject(s => SocialMedia.Create(s.Name, s.Link));
