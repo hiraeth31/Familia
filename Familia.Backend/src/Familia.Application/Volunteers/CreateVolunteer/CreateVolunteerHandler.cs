@@ -4,17 +4,21 @@ using Familia.Domain.Aggregates.VolunteerAggregate.ValueObjects;
 using Familia.Domain.Shared;
 using Familia.Domain.Shared.EntityIds;
 using FluentValidation;
+using Microsoft.Extensions.Logging;
 
 namespace Familia.Application.Volunteers.CreateVolunteer
 {
     public class CreateVolunteerHandler
     {
         private readonly IVolunteersRepository _volunteersRepository;
+        private readonly ILogger<CreateVolunteerHandler> _logger;
 
         public CreateVolunteerHandler(
-            IVolunteersRepository volunteersRepository)
+            IVolunteersRepository volunteersRepository,
+            ILogger<CreateVolunteerHandler> logger)
         {
             _volunteersRepository = volunteersRepository;
+            _logger = logger;
         }
 
         public async Task<Result<Guid, Error>> Handle(
@@ -49,6 +53,9 @@ namespace Familia.Application.Volunteers.CreateVolunteer
                 return volunteerResult.Error;
 
             await _volunteersRepository.Add(volunteerResult.Value, cancellationToken);
+
+            _logger.LogInformation(
+                "Created volunteer {fullname} with id {volunteerId}", fullName, volunteerId);
 
             return (Guid)volunteerResult.Value.Id;
         }

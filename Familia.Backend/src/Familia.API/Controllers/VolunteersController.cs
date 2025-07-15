@@ -1,10 +1,6 @@
 using Familia.API.Extensions;
-using Familia.API.Response;
 using Familia.Application.Volunteers.CreateVolunteer;
-using Familia.Domain.Shared;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace Familia.API.Controllers
 {
