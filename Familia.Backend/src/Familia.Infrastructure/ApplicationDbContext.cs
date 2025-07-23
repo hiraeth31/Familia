@@ -1,5 +1,6 @@
 ﻿using Familia.Domain.Aggregates.SpeciesAggregate.AggregateRoot;
 using Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot;
+using Familia.Infrastructure.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,9 @@ namespace Familia.Infrastructure
         {
             optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
             optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
+            optionsBuilder.EnableSensitiveDataLogging();
+
+            //optionsBuilder.AddInterceptors(new SoftDeleteInterceptor());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -23,7 +27,7 @@ namespace Familia.Infrastructure
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
 
-        private ILoggerFactory CreateLoggerFactory() => 
+        private ILoggerFactory CreateLoggerFactory() =>
             LoggerFactory.Create(builder => { builder.AddConsole(); });
     }
 }

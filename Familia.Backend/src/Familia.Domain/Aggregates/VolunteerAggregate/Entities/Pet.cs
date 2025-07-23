@@ -9,8 +9,10 @@ using Familia.Domain.Shared.ValueObjects;
 
 namespace Familia.Domain.Aggregates.VolunteerAggregate.Entities
 {
-    public sealed class Pet : IdEntity<PetId>
+    public sealed class Pet : IdEntity<PetId>, ISoftDeletable
     {
+        private bool _isDeleted = false;
+
         //ef core navigation
         public Volunteer Volunteer { get; private set; } = null!;
 
@@ -98,6 +100,16 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.Entities
                 birthday, isVaccinated, helpStatus, creationDate);
 
             return pet;
+        }
+
+        public void Delete()
+        {
+            _isDeleted = true;
+        }
+
+        public void Restore()
+        {
+            _isDeleted = false;
         }
     }
 }

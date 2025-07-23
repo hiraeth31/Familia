@@ -135,7 +135,10 @@ namespace Familia.Infrastructure.Configurations
                 .SetDefaultDateTimeKind(DateTimeKind.Utc)
                 .HasColumnName("creation_date")
                 .IsRequired();
-                
+
+            builder.Property<bool>("_isDeleted")
+                .UsePropertyAccessMode(PropertyAccessMode.Field)
+                .HasColumnName("is_deleted");
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Familia.Application.Volunteers.CreateVolunteer
 
             var number = ContactPhone.Create(request.Number).Value;
 
-            var existingNumberVolunteer = await _volunteersRepository.GetByNumber(number);
+            var existingNumberVolunteer = await _volunteersRepository.GetByNumber(number, cancellationToken);
             if (existingNumberVolunteer.IsSuccess)
                 return Errors.General.AlreadyExist();
 
@@ -55,7 +55,7 @@ namespace Familia.Application.Volunteers.CreateVolunteer
             await _volunteersRepository.Add(volunteerResult.Value, cancellationToken);
 
             _logger.LogInformation(
-                "Created volunteer {fullname} with id {volunteerId}", fullName, volunteerId);
+                "Created volunteer {fullname} with id {volunteerId}", fullName, volunteerId.Value);
 
             return (Guid)volunteerResult.Value.Id;
         }

@@ -82,7 +82,12 @@ namespace Familia.Infrastructure.Configurations
             builder.HasMany(v => v.Pets)
                 .WithOne(p => p.Volunteer)
                 .HasForeignKey("volunteer_id")
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property<bool>("_isDeleted")
+                .UsePropertyAccessMode(PropertyAccessMode.Field)
+                .HasColumnName("is_deleted")
+                .HasDefaultValue(false); ;
         }
     }
 }

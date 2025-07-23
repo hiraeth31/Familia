@@ -9,5 +9,5 @@ namespace Familia.Application.Volunteers.CreateVolunteer
         string Email,
         string Number,
         IEnumerable<SocialMediaDto> SocialMedias,
-        HelpRequisitiesDto HelpRequisities);
+        HelpRequisitesDto HelpRequisities);
 }
