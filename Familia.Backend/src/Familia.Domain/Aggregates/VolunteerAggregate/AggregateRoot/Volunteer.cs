@@ -7,8 +7,9 @@ using Familia.Domain.Shared.Extenstions;
 
 namespace Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot
 {
-    public sealed class Volunteer: IdEntity<VolunteerId>
+    public sealed class Volunteer: IdEntity<VolunteerId>, ISoftDeletable
     {
+        private bool _isDeleted = false;
         private readonly List<Pet> _pets = [];
         private readonly List<SocialMedia> _socialMedias = [];
         //ef core
@@ -31,7 +32,7 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot
             YearsOfExperience = yearsOfExperience;
             ContactPhone = contactPhone;
             HelpRequisites = helpRequisites;
-            _socialMedias = socialMedias;
+            _socialMedias = new List<SocialMedia>(socialMedias);
         }
         public FullName FullName { get; private set; } = default!;
         public string Email { get; private set; } = default!;
@@ -68,5 +69,45 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot
         private int FoundHomeAnimalsNumber() => _pets.Count(p => p.HelpStatus == HelpStatus.FoundHome);
         private int LookingForHomeAnimalsNumber() => _pets.Count(p => p.HelpStatus == HelpStatus.LookingForHome);
         private int NeedHelpAnimalsNumber() => _pets.Count(p => p.HelpStatus == HelpStatus.NeedsHelp);
+
+        public void UpdateMainInfo
+            (FullName fullName,
+            string email,
+            string description,
+            int yearsOfExperience,
+            ContactPhone contactPhone)
+        {
+            FullName = fullName;
+            Email = email;
+            Description = description;
+            YearsOfExperience = yearsOfExperience;
+            ContactPhone = contactPhone;
+        }
+
+        public void UpdateSocialMedia
+            (IEnumerable<SocialMedia> socialMedia)
+        {
+            _socialMedias.Clear();
+            _socialMedias.AddRange(socialMedia);
+        }
+
+        public void UpdateHelpRequisite
+            (HelpRequisites helpRequisites)
+        {
+            HelpRequisites = helpRequisites;
+        }
+
+        public void Delete()
+        {
+            if (_isDeleted) return;
+
+            _isDeleted = true;
+        }
+        public void Restore()
+        {
+            if (!_isDeleted) return;
+
+            _isDeleted = false;
+        }
     }
 }

@@ -13,15 +13,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Familia.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250705040839_Initial")]
-    partial class Initial
+    [Migration("20250723025739_SoftDelete")]
+    partial class SoftDelete
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.6")
+                .HasAnnotation("ProductVersion", "9.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -92,6 +92,12 @@ namespace Familia.Infrastructure.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("integer")
                         .HasColumnName("years_of_experience");
+
+                    b.Property<bool>("_isDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
 
                     b.ComplexProperty<Dictionary<string, object>>("ContactPhone", "Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot.Volunteer.ContactPhone#ContactPhone", b1 =>
                         {
@@ -194,6 +200,10 @@ namespace Familia.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
                         .HasColumnName("name");
+
+                    b.Property<bool>("_isDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
 
                     b.Property<Guid?>("volunteer_id")
                         .HasColumnType("uuid");
@@ -302,7 +312,7 @@ namespace Familia.Infrastructure.Migrations
                     b.HasOne("Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot.Volunteer", "Volunteer")
                         .WithMany("Pets")
                         .HasForeignKey("volunteer_id")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.OwnsOne("Familia.Domain.Aggregates.SpeciesAggregate.SpeciesBreed", "SpeciesBreed", b1 =>
                         {
