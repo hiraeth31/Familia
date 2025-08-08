@@ -13,7 +13,7 @@ namespace Familia.Infrastructure.Configurations
         {
             builder.ToTable("pets");
 
-            builder.HasKey(p=> p.Id);
+            builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Id)
                 .HasConversion(
@@ -29,14 +29,14 @@ namespace Familia.Infrastructure.Configurations
                     value => SpeciesId.Create(value))
                 .HasColumnName("species_id");
 
-                sb.Property(p=> p.BreedId)
+                sb.Property(p => p.BreedId)
                 .HasConversion(
                     id => id.Value,
                     value => BreedId.Create(value))
                 .HasColumnName("breed_id");
             });
 
-            builder.Property(p=> p.Name)
+            builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(Constants.LOW_TEXT_LENGTH)
                 .HasColumnName("name");
@@ -55,6 +55,13 @@ namespace Familia.Infrastructure.Configurations
                 .IsRequired()
                 .HasMaxLength(Constants.LOW_TEXT_LENGTH)
                 .HasColumnName("health_info");
+
+            builder.ComplexProperty(p => p.Position, pb =>
+            {
+                pb.Property(p => p.Value)
+                .IsRequired()
+                .HasColumnName("position");
+            });
 
             builder.ComplexProperty(p => p.Address, pb =>
             {

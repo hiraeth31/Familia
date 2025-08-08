@@ -287,6 +287,15 @@ namespace Familia.Infrastructure.Migrations
                                 .HasColumnName("phone");
                         });
 
+                    b.ComplexProperty<Dictionary<string, object>>("Position", "Familia.Domain.Aggregates.VolunteerAggregate.Entities.Pet.Position#Position", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<int>("Value")
+                                .HasColumnType("integer")
+                                .HasColumnName("position");
+                        });
+
                     b.HasKey("Id");
 
                     b.HasIndex("volunteer_id");

@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Familia.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250723025739_SoftDelete")]
-    partial class SoftDelete
+    [Migration("20250731103035_AddPosition")]
+    partial class AddPosition
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -288,6 +288,15 @@ namespace Familia.Infrastructure.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("phone");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Position", "Familia.Domain.Aggregates.VolunteerAggregate.Entities.Pet.Position#Position", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<int>("Value")
+                                .HasColumnType("integer")
+                                .HasColumnName("position");
                         });
 
                     b.HasKey("Id");
