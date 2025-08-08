@@ -57,6 +57,7 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.Entities
         public string Description { get; private set; } = default!;
         public string Color { get; private set; } = default!;
         public string HealthInfo { get; private set; } = default!;
+        public Position Position { get; private set; } = default!;
         public Address Address { get; private set; } = default!;
         public BodyMeasurements BodyMeasurements { get; private set; } = default!;
         public ContactPhone PhoneNumber { get; private set; } = default!;
@@ -110,6 +111,31 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.Entities
         public void Restore()
         {
             _isDeleted = false;
+        }
+
+        public void SetPosition(Position position) =>
+            Position = position;
+
+        public UnitResult<Error> MoveForward()
+        {
+            var newPosition = Position.Forward();
+            if (newPosition.IsFailure)
+                return newPosition.Error;
+
+            Position = newPosition.Value;
+
+            return UnitResult.Success<Error>();
+        }
+
+        public UnitResult<Error> MoveBack()
+        {
+            var newPosition = Position.Back();
+            if (newPosition.IsFailure)
+                return newPosition.Error;
+
+            Position = newPosition.Value;
+
+            return UnitResult.Success<Error>();
         }
     }
 }

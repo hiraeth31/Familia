@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Familia.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class SoftDelete : Migration
+    public partial class AddPosition : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -88,7 +88,8 @@ namespace Familia.Infrastructure.Migrations
                     weight = table.Column<double>(type: "double precision", nullable: false),
                     payment_method = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
                     help_status = table.Column<string>(type: "text", nullable: false),
-                    phone = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                    phone = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    position = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

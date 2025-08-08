@@ -7,13 +7,13 @@ using Familia.Domain.Shared.Extenstions;
 
 namespace Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot
 {
-    public sealed class Volunteer: IdEntity<VolunteerId>, ISoftDeletable
+    public sealed class Volunteer : IdEntity<VolunteerId>, ISoftDeletable
     {
         private bool _isDeleted = false;
         private readonly List<Pet> _pets = [];
         private readonly List<SocialMedia> _socialMedias = [];
         //ef core
-        private Volunteer(VolunteerId id): base(id)
+        private Volunteer(VolunteerId id) : base(id)
         {
         }
         public Volunteer(VolunteerId volunteerId,
@@ -108,6 +108,113 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot
             if (!_isDeleted) return;
 
             _isDeleted = false;
+        }
+
+        public Result<Pet, Error> GetPetById(PetId id)
+        {
+            var pet = _pets.FirstOrDefault(p => p.Id == id);
+            if (pet is null)
+                return Errors.General.NotFound();
+
+            return pet;
+        }
+
+        public UnitResult<Error> AddPet(Pet pet)
+        {
+            var positionResult = Position.Create(_pets.Count + 1);
+            if (positionResult.IsFailure)
+                return positionResult.Error;
+
+            pet.SetPosition(positionResult.Value);
+
+            _pets.Add(pet);
+            return Result.Success<Error>();
+        }
+
+        public UnitResult<Error> MovePet(Pet pet, Position newPosition)
+        {
+            var currentPosition = pet.Position;
+
+            if (currentPosition == newPosition || _pets.Count == 1)
+                return Result.Success<Error>();
+
+            var adjustedPosition = AdjustNewPositionIfOutOfRange(newPosition);
+            if (adjustedPosition.IsFailure)
+                return adjustedPosition.Error;
+
+            newPosition = adjustedPosition.Value;
+
+            var moveResult = MovePetsBetweenPositions(currentPosition, newPosition);
+            if (moveResult.IsFailure)
+                return moveResult.Error;
+
+            pet.SetPosition(newPosition);
+
+            return Result.Success<Error>();
+        }
+
+        private Result<Position, Error> AdjustNewPositionIfOutOfRange(Position newPosition)
+        {
+            if (newPosition.Value <= _pets.Count)
+                return newPosition;
+
+            var lastPosition = Position.Create(_pets.Count - 1);
+            if (lastPosition.IsFailure)
+                return lastPosition.Error;
+
+            return lastPosition.Value;
+        }
+
+        public UnitResult<Error> MovePetsBetweenPositions(Position currentPosition, Position newPosition)
+        {
+            if (newPosition.Value < currentPosition.Value)
+            {
+                var petsToMove = _pets.Where(p => p.Position.Value >= newPosition.Value
+                    && p.Position.Value < currentPosition.Value);
+
+                foreach (var petToMove in petsToMove)
+                {
+                    var result = petToMove.MoveForward();
+                    if (result.IsFailure)
+                        return result.Error;
+                }
+            }
+            else if (newPosition.Value > currentPosition.Value)
+            {
+                var petsToMove = _pets.Where(p => p.Position.Value > currentPosition.Value
+                    && p.Position.Value <= newPosition.Value);
+
+                foreach (var petToMove in petsToMove)
+                {
+                    var result = petToMove.MoveBack();
+                    if (result.IsFailure)
+                        return result.Error;
+                }
+            }
+
+            return Result.Success<Error>();
+        }
+
+        public UnitResult<Error> MovePetToFirstPosition(Pet pet)
+        {
+            var moveResult = MovePet(pet, Position.First);
+            if (moveResult.IsFailure)
+                return moveResult.Error;
+
+            return Result.Success<Error>();
+        }
+
+        public UnitResult<Error> MovePetToLastPosition(Pet pet)
+        {
+            var lastPosition = Position.Create(_pets.Count); // -1
+            if (lastPosition.IsFailure)
+                return lastPosition.Error;
+
+            var moveResult = MovePet(pet, lastPosition.Value);
+            if (moveResult.IsFailure)
+                return moveResult.Error;
+
+            return Result.Success<Error>();
         }
     }
 }

@@ -8,7 +8,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.WebSockets;
 
-namespace Familia.API.Controllers
+namespace Familia.API.Controllers.Volunteers
 {
     [ApiController]
     [Route("[controller]")]

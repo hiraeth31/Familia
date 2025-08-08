@@ -27,4 +27,8 @@
     <ProjectReference Include="..\Familia.Infrastructure\Familia.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Volunteers\Requests\" />
+  </ItemGroup>
+
 </Project>
