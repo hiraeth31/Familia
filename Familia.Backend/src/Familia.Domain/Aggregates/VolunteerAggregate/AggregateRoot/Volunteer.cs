@@ -102,12 +102,16 @@ namespace Familia.Domain.Aggregates.VolunteerAggregate.AggregateRoot
             if (_isDeleted) return;
 
             _isDeleted = true;
+            foreach (var pet in _pets)
+                pet.Delete();
         }
         public void Restore()
         {
             if (!_isDeleted) return;
 
             _isDeleted = false;
+            foreach (var pet in _pets)
+                pet.Restore();
         }
 
         public Result<Pet, Error> GetPetById(PetId id)
